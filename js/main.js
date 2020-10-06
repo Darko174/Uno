@@ -36,6 +36,7 @@ class Game{
         card.number = cardInfo.number;
         card.letter = cardInfo.letter;
         card.t = cardInfo.text;
+        /* target == playerCards ? card.style.backgroundImage = `url(${cardInfo.imgUrl})` : card.style.background = "linear-gradient(#c6e4ee 0%, #c6e4ee 40%, #fed1ae 60%, #faa0b9 70%, #cb7dcb 80%, #757ecb 100%)";  */
         card.style.backgroundImage = `url(${cardInfo.imgUrl})`;
         target.appendChild(card);
     }
