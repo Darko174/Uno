@@ -20,10 +20,14 @@ class Game{
     //Создаем колоду
     constructor(cards){
         this.cards = this.shuffle(cards);
+        
     }
     //Перемешиваем колоду
     shuffle(array){
-        return array.sort(() => Math.random() - 0.5);
+        for(let i = 0; i < 500; i++){
+            array.sort(() => Math.random() - 0.5);
+        }
+        return array
     }
     //Рендерим карточку
     createCard(target, cardInfo){
@@ -42,22 +46,29 @@ class Game{
 class Player{
     //Создаем игрока
     constructor(array){
-        this.playerCards = this.getCards(array);
+        this.cards = this.getCards(array);
     }
     //Распределяем карты для игроков
-    getCards(array){
+    getCards(array){                                                                   /////!!!!!
         const playerCards = [];
+        const enemyCards = [];
         for(let i = 0; i < 7; i++) {
-            playerCards.push(array.pop());
+            console.log(playerCards.push(array.pop()), "Первому" );
+            
+            console.log(enemyCards.push(array.pop()), "Второму" );
         }
-        return playerCards
+        return {
+            firstPlayer: playerCards,
+            secondPlayer: enemyCards
+        }
     }
 }
 //Колода
 const newGame = new Game(database.cards);
 //Массивы с картами игроков
-const firstPlayer = new Player(newGame.cards).playerCards;
-const secondPlayer = new Player(newGame.cards).playerCards;
+const player = new Player(newGame.cards).cards;
+const firstPlayer = player.firstPlayer;
+const secondPlayer = player.secondPlayer;
 newGame.renderCards(playerCards, firstPlayer);
 newGame.renderCards(enemyCards, secondPlayer);
 
@@ -75,6 +86,10 @@ function addCard(player, deck) {
 function init() {
     buttonStartGame.classList.toggle("hide");
 
+}
+function gameOver() {
+    playerCards.childNodes.length ? true : alert("You WIN! =)");
+    enemyCards.childNodes.length ? true : alert("You Lose! =(");
 }
 //ИИ
 function artificialIntelligence() {
@@ -112,6 +127,7 @@ document.addEventListener("click", e => {
             console.log(newGame.cards);
             ////
             artificialIntelligence();
+            gameOver();
         }
     }
     if(target.closest(".cardsStorage")) {

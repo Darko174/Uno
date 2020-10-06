@@ -88,8 +88,8 @@
     background: transparent center / cover no-repeat;
 }
 .playerCards .card:hover{
-    width: 20%;
-    height: 130%;
+    /* width: 20%;
+    height: 130%; */
 }
 .a{
     width: 100%;
