@@ -37,7 +37,14 @@ class Game{
         card.letter = cardInfo.letter;
         card.t = cardInfo.text;
         /* target == playerCards ? card.style.backgroundImage = `url(${cardInfo.imgUrl})` : card.style.background = "linear-gradient(#c6e4ee 0%, #c6e4ee 40%, #fed1ae 60%, #faa0b9 70%, #cb7dcb 80%, #757ecb 100%)";  */
-        card.style.backgroundImage = `url(${cardInfo.imgUrl})`;
+        //card.style.backgroundImage = `url(${cardInfo.imgUrl})`;
+        if(target == playerCards) {
+            card.style.backgroundImage = `url(${cardInfo.imgUrl})`;
+        }
+        else {
+            card.style.background = "linear-gradient(#c6e4ee 0%, #c6e4ee 40%, #fed1ae 60%, #faa0b9 70%, #cb7dcb 80%, #757ecb 100%)";
+            card.bottomImage = `url(${cardInfo.imgUrl})`;
+        }
         target.appendChild(card);
     }
     renderCards(target, array) {
@@ -97,20 +104,22 @@ function artificialIntelligence() {
     const aiCards = Array.from(enemyCards.childNodes);
     const cardInTable = actionArea.querySelector(".card");
     const sortedCardsByNumber = aiCards.map(i => i).sort((a,b) => a.number - b.number);
-    let a = true;
+    let noCard = true;
 
     for(let i of sortedCardsByNumber) {
         if(i.number == cardInTable.number || i.letter == cardInTable.letter) {
             setTimeout(() => {
+                i.style.background = "";
+                i.style.backgroundImage = i.bottomImage;
                 i.classList.add("a");
                 actionArea.innerHTML = "";
                 actionArea.appendChild(i);
             }, 2000);
-            a = false;
+            noCard = false;
             break
         }
     }
-    if(a) {
+    if(noCard) {
         addCard(secondPlayer, newGame.cards);
         newGame.createCard(enemyCards, secondPlayer[secondPlayer.length - 1]); 
     }
